@@ -1,5 +1,5 @@
 apiVersion: kuttl.dev/v1beta1
 kind: TestStep
 commands:
-  - command: helm install --set image.repository=keycloak-image --set image.tag=latest --replace --wait keycloak-operator-e2e ../../../deploy-templates
+  - command: helm install --set image.repository=${IMAGE_REPOSITORY} --set image.tag=${IMAGE_TAG} --replace --wait keycloak-operator-e2e ../../../deploy-templates
     namespaced: true

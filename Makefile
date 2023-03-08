@@ -82,10 +82,15 @@ test: fmt vet envtest
 	go test ./... -coverprofile=coverage.out `go list ./...`
 
 ## Run e2e tests. Requires kind with running cluster and kuttl tool.
-e2e: build
+e2e:
+        IN_CLUSTER ?= false
+	IMAGE_REPOSITORY ?= "keycloak-image"
+	IMAGE_TAG ?= "latest"
+ifeq ($(IN_CLUSTER), false)
 	docker build --no-cache -t keycloak-image .
-	kind load docker-image keycloak-image
-	kubectl kuttl test
+	kind load docker-image keycloak-image	
+endif
+        kubectl kuttl test
 
 .PHONY: fmt
 fmt:  ## Run go fmt
